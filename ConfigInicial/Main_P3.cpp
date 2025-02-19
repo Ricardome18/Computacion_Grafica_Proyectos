@@ -29,7 +29,7 @@ int main() {
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Proyecciones y transformaciones basicas", nullptr, nullptr);
+	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "PRACTICA 3 Ricardo Mendoza", nullptr, nullptr);
 
 	int screenWidth, screenHeight;
 
@@ -73,7 +73,7 @@ int main() {
 
 	// Set up vertex data (and buffer(s)) and attribute pointers
 	// use with Orthographic Projection
-
+	//Proyeccion ortogonal
 	//GLfloat vertices[] = {
  //      -0.5f*500, -0.5f, 0.5f, 1.0f, 0.0f,0.0f,//Front
 	//	0.5f * 500, -0.5f * 500, 0.5f * 500,  1.0f, 0.0f,0.0f,
@@ -197,10 +197,10 @@ int main() {
 
 	glBindVertexArray(0); // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs)
 
-	
+	//Aqui se esta usando la libreria GLM para crear variables de tipo projection e inicializando con valor de 1
 	glm::mat4 projection=glm::mat4(1);
 
-	projection = glm::perspective(45.0f, (GLfloat)screenWidth / (GLfloat)screenHeight, 0.1f, 100.0f);//FOV, Radio de aspecto,znear,zfar
+	projection = glm::perspective(45.0f, (GLfloat)screenWidth / (GLfloat)screenHeight, 0.1f, 100.0f);//FOV, Radio de aspecto,znear,zfar esta es la matriz de proyeccion
 	//projection = glm::ortho(0.0f, (GLfloat)screenWidth, 0.0f, (GLfloat)screenHeight, 0.1f, 1000.0f);//Izq,Der,Fondo,Alto,Cercania,Lejania
 	while (!glfwWindowShouldClose(window))
 	{
@@ -213,16 +213,18 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 
 
-		// Draw our first triangle
+		// Con esto dibujamos nuestro cubo 1 R
 		ourShader.Use();
 		glm::mat4 model=glm::mat4(1);
 		glm::mat4 view=glm::mat4(1);
 	
-	  view = glm::translate(view, glm::vec3(0.0f,0.0f,-14.0f));
-		model = glm::rotate( model, 0.5f, glm::vec3( 1.0f, 2.0f, 0.0f ) ); // use to compare orthographic and perspective projection
-		model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
+		//Esto se utiliza para mover el cubo con las herramientas de transformacion
+		view = glm::translate(view, glm::vec3(-5.0f,-7.0f,-25.0f));//X Y Z
+		model = glm::rotate( model, 0.5f, glm::vec3( 1.0f, 6.0f, 0.0f ) ); // use to compare orthographic and perspective projection
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
 		//view = glm::translate( view, glm::vec3( screenWidth / 2, screenHeight / 10,-800.0f ) ); // use with orthographic projection
 		
+		//Esta va a ser la comunicacion para el shader,por medio de unas variables Uniforms
 		GLint modelLoc = glGetUniformLocation(ourShader.Program, "model");
 		GLint viewLoc = glGetUniformLocation(ourShader.Program, "view");
 		GLint projecLoc = glGetUniformLocation(ourShader.Program, "projection");
@@ -234,13 +236,67 @@ int main() {
 
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
-		//nuevo cubo
+
+		//nuevo cubo 2 I
 		model = glm::mat4(1);//inicializando de nuevo la matriz para el nuevo cubo
-		model = glm::translate(model,glm::vec3 (10.0f, 0.0f, -10.0f));//aplicamos una traslacion de 5 unidades
-		model = glm::rotate(model, 55.0f, glm::vec3(0.0f, 0.0f, 2.0f)); // use to compare orthographic and perspective projection
-		model = glm::scale(model, glm::vec3(9.0f, 2.0f, 5.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));//nuevo llamado al shader
+		model = glm::translate(model,glm::vec3 (5.0f, 4.5f, 2.0f));//aplicamos una traslacion de 8 unidades en X
+		model = glm::rotate(model, -1.0f, glm::vec3(-5.0f, 19.0f, 0.0f)); // use to compare orthographic and perspective projection
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));//nuevo llamado al shader necesario
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		//nuevo cubo 3 C
+		model = glm::mat4(1);//inicializando de nuevo la matriz para el nuevo cubo
+		model = glm::translate(model, glm::vec3(5.0f,0.0f, 1.0f));//aplicamos una traslacion de 5 unidades
+		model = glm::rotate(model, 1.0f, glm::vec3(1.0f, 25.0f, 0.0f)); // use to compare orthographic and perspective projection
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));//nuevo llamado al shader necesario
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//view = glm::translate(view, glm::vec3(-5.0f, -7.0f, -25.0f));//X Y Z
+		//model = glm::rotate(model, 0.5f, glm::vec3(1.0f, 6.0f, 0.0f)); // use to compare orthographic and perspective projection
+		//model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+
+		//nuevo cubo 4 A
+		model = glm::mat4(1);//inicializando de nuevo la matriz para el nuevo cubo
+		model = glm::translate(model, glm::vec3(10.0f, 0.0f, 1.0f));//aplicamos una traslacion de 5 unidades
+		model = glm::rotate(model, 0.5f, glm::vec3(1.0f, 1.0f, 0.0f)); // use to compare orthographic and perspective projection
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));//nuevo llamado al shader necesario
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		//nuevo cubo 5 R
+		model = glm::mat4(1);//inicializando de nuevo la matriz para el nuevo cubo
+		model = glm::translate(model, glm::vec3(15.0f, 0.0f, 1.0f));//aplicamos una traslacion de 5 unidades
+		model = glm::rotate(model, 0.5f, glm::vec3(5.0f, 3.0f, 0.0f)); // use to compare orthographic and perspective projection
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));//nuevo llamado al shader necesario
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//nuevo cubo 6 D
+		model = glm::mat4(1);//inicializando de nuevo la matriz para el nuevo cubo
+		model = glm::translate(model, glm::vec3(11.0f, 5.0f, 1.0f));//aplicamos una traslacion de 5 unidades
+		model = glm::rotate(model, 0.5f, glm::vec3(5.0f, 3.0f, 0.0f)); // use to compare orthographic and perspective projection
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));//nuevo llamado al shader necesario
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//nuevo cubo 7 O
+		model = glm::mat4(1);//inicializando de nuevo la matriz para el nuevo cubo
+		model = glm::translate(model, glm::vec3(8.0f, 9.5f, 1.0f));//aplicamos una traslacion de 5 unidades
+		model = glm::rotate(model, 0.5f, glm::vec3(5.0f, 3.0f, 0.0f)); // use to compare orthographic and perspective projection
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));//nuevo llamado al shader necesario
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
 
 
 		glBindVertexArray(0);
