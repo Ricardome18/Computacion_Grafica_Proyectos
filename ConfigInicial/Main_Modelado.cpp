@@ -1,3 +1,9 @@
+//Práctica 4	 	Mendoza Espinosa Ricardo
+//Fecha de entrega : 26 - 02 - 2025    	 	319018370
+
+
+
+
 #include<iostream>
 
 //#define GLEW_STATIC
@@ -198,41 +204,133 @@ int main() {
 		glBindVertexArray(VAO);
 		
 		glBindVertexArray(VAO);
-		//Se emepieza en esta seccion a dibujar la mesa sencilla,comenzando con la superficie
+		//Se emepieza en esta seccion a dibujar el cuerpo 
 		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(5.0f, 0.5f, 3.5f));  // Ancho, grosor, profundidad
+		model = glm::scale(model, glm::vec3(6.0f, 10.0f, 1.5f));  // Ancho, Alto, Profundidad
 		model = glm::translate(model, glm::vec3(0.0f, 0.6f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		//Pata 1
+		//Pata 1 DERECHA
 		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(0.5f, 3.6f, 0.5f));  // Tamaño de la pata
-		model = glm::translate(model, glm::vec3(4.5f, -0.4f, 2.9f));  // Posiciona la pata
+		model = glm::scale(model, glm::vec3(1.0f, 13.6f, 0.75f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(2.5f, -0.2f, -0.5f));  // Movimiento en X,Alruta posicion y Movimiento en Profundidad
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
-		//Pata 2
+		//Pata 2 Izquierda
 		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(0.5f, 3.6f, 0.5f));  // Tamaño de la pata
-		model = glm::translate(model, glm::vec3(-4.5f, -0.4f, 2.9f));  // Posiciona la pata
+		model = glm::scale(model, glm::vec3(1.0f, 13.6f, 1.5f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-2.5f, -0.2f, 0.0f));  // Posiciona la pata
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		//Pata 3
+
+
+		//Brazo DERECHA
 		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(0.5f, 3.6f, 0.5f));  // Tamaño de la pata
-		model = glm::translate(model, glm::vec3(-4.5f, -0.4f, -3.0f));  // Posiciona la pata
+		model = glm::scale(model, glm::vec3(1.0f, 2.6f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(3.5f, 3.6f, -0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		//Pata 4
 		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(0.5f, 3.6f, 0.5f));  // Tamaño de la pata
-		model = glm::translate(model, glm::vec3(4.5f, -0.4f, -3.0f));  // Posiciona la pata
+		model = glm::scale(model, glm::vec3(1.0f, 2.6f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(4.5f, 3.0f, -0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.0f, 2.6f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(5.5f, 2.6f, -0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.0f, 2.6f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(6.0f, 2.6f, -0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.0f, 5.6f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(6.0f, 1.6f, -0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//Mano de woody
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(2.5f, 1.0f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(2.1f, 12.3f, -0.4f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.6f, 1.0f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(3.3f, 12.3f, 0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.6f, 1.0f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(3.3f, 13.3f, -0.4f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		//Brazo derecho
+
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.0f, 2.6f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-3.5f, 3.6f, -0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.0f, 2.6f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-4.5f, 3.0f, -0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(2.6f, 1.0f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-2.2f, 7.0f, -0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.0f, 4.0f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-5.5f, 1.2f,-0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+
+		//		model = glm::scale(model, glm::vec3(1.0f, 2.6f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+
+
+
+
+
+
+		//Funda pistola  Izquierdo
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.0f, 4.6f, 1.5f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-3.5f, -0.2f, 0.0f));  // Posiciona la pata
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
 
 		glBindVertexArray(0);
 		// Swap the screen buffers
