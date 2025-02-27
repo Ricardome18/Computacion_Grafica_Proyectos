@@ -1,9 +1,8 @@
 #version 330 core
-in vec3 ourColor;
-
-out vec4 color;
+out vec4 FragColor;
+uniform vec3 color;  // Nuevo uniform para definir el color
 
 void main()
 {
-	color = vec4(ourColor, 1.0f);
+    FragColor = vec4(color, 1.0f);  // Se usa el color uniforme
 }

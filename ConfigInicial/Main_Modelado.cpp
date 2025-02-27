@@ -1,5 +1,5 @@
 //Práctica 4	 	Mendoza Espinosa Ricardo
-//Fecha de entrega : 26 - 02 - 2025    	 	319018370
+//Fecha de entrega : 28 - 02 - 2025    	 	319018370
 
 
 
@@ -40,7 +40,7 @@ int main() {
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Modelado geometrico-Ricardo Mendoza", nullptr, nullptr);
+	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Practica 4-Ricardo Mendoza", nullptr, nullptr);
 
 	int screenWidth, screenHeight;
 
@@ -178,7 +178,7 @@ int main() {
 
 		// Render
 		// Clear the colorbuffer
-		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Fondo blanco
 		glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 
 
@@ -194,6 +194,7 @@ int main() {
 		GLint modelLoc = glGetUniformLocation(ourShader.Program, "model");
 		GLint viewLoc = glGetUniformLocation(ourShader.Program, "view");
 		GLint projecLoc = glGetUniformLocation(ourShader.Program, "projection");
+		GLint colorLoc = glGetUniformLocation(ourShader.Program, "color");
 
 		//SE ENVIAN LOS SHADER POR LOS Uniforms
 		glUniformMatrix4fv(projecLoc, 1, GL_FALSE, glm::value_ptr(projection));
@@ -205,36 +206,117 @@ int main() {
 		
 		glBindVertexArray(VAO);
 		//Se emepieza en esta seccion a dibujar el cuerpo 
+		glUniform3f(colorLoc, 0.855f, 0.647f, 0.125f); // Goldenrod
 		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(6.0f, 10.0f, 1.5f));  // Ancho, Alto, Profundidad
+		model = glm::scale(model, glm::vec3(6.0f, 10.0f, 3.0f));  // Ancho, Alto, Profundidad
 		model = glm::translate(model, glm::vec3(0.0f, 0.6f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		//Pata 1 DERECHA
+
+		//Detalles del cuerpo del lado izquierdo
+		glUniform3f(colorLoc, 0.973f, 0.973f, 1.0f); // GhostWhite
 		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(1.0f, 13.6f, 0.75f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
-		model = glm::translate(model, glm::vec3(2.5f, -0.2f, -0.5f));  // Movimiento en X,Alruta posicion y Movimiento en Profundidad
+		model = glm::scale(model, glm::vec3(1.5f, 4.0f, 3.0f));  // Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-1.5f, 1.3f, 0.2f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
-		//Pata 2 Izquierda
+		glUniform3f(colorLoc, 0.627f, 0.322f, 0.176f); // Sienna
 		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(1.0f, 13.6f, 1.5f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
-		model = glm::translate(model, glm::vec3(-2.5f, -0.2f, 0.0f));  // Posiciona la pata
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));  // Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-1.5f, 5.3f, 1.2f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		glUniform3f(colorLoc, 0.973f, 0.973f, 1.0f); // GhostWhite
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));  // Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-1.5f, 6.0f, 1.2f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+				//Detalles del cuerpo del lado izquierdo
+		glUniform3f(colorLoc, 0.973f, 0.973f, 1.0f); // GhostWhite
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.5f, 4.0f, 3.0f));  // Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-1.5f, 1.3f, 0.2f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		glUniform3f(colorLoc, 0.627f, 0.322f, 0.176f); // Sienna
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));  // Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-1.5f, 5.3f, 0.2f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		glUniform3f(colorLoc, 0.973f, 0.973f, 1.0f); // GhostWhite
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));  // Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-1.5f, 6.0f, 0.2f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		//Detalles del cuerpo del lado derecho
+		glUniform3f(colorLoc, 0.973f, 0.973f, 1.0f); // GhostWhite
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.5f, 4.0f, 3.0f));  // Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(1.5f, 1.9f, 0.2f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		glUniform3f(colorLoc, 0.627f, 0.322f, 0.176f); // Sienna
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));  // Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(1.5f, 3.2f, 0.8f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		glUniform3f(colorLoc, 0.973f, 0.973f, 1.0f); // GhostWhite
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));  // Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(1.5f, 2.5f, 0.8f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+
+
+		//Pierna 1 DERECHA
+		glUniform3f(colorLoc, 0.227f, 0.255f, 0.776f); // Azul violaceo
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(2.4f, 13.7f, 0.75f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(0.8f, -0.42f, -0.5f));  // Movimiento en X,Alruta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		//Pierna 2 Izquierda
+		glUniform3f(colorLoc, 0.227f, 0.255f, 0.776f); // Azul violaceo
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.5f, 13.6f, 3.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-1.5f, -0.42f, 0.0f));  // Posiciona la pata
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
 
 		//Brazo DERECHA
+		glUniform3f(colorLoc, 0.855f, 0.647f, 0.125f); // Goldenrod
 		model = glm::mat4(1.0f);
 		model = glm::scale(model, glm::vec3(1.0f, 2.6f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
 		model = glm::translate(model, glm::vec3(3.5f, 3.6f, -0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
+
+		glUniform3f(colorLoc, 0.855f, 0.647f, 0.125f); // Goldenrod
 		model = glm::mat4(1.0f);
 		model = glm::scale(model, glm::vec3(1.0f, 2.6f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
 		model = glm::translate(model, glm::vec3(4.5f, 3.0f, -0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
@@ -242,14 +324,15 @@ int main() {
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
-
+		glUniform3f(colorLoc, 0.855f, 0.647f, 0.125f); // Goldenrod
 		model = glm::mat4(1.0f);
 		model = glm::scale(model, glm::vec3(1.0f, 2.6f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
 		model = glm::translate(model, glm::vec3(5.5f, 2.6f, -0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-
+				
+		glUniform3f(colorLoc, 0.855f, 0.647f, 0.125f); // Goldenrod
 		model = glm::mat4(1.0f);
 		model = glm::scale(model, glm::vec3(1.0f, 2.6f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
 		model = glm::translate(model, glm::vec3(6.0f, 2.6f, -0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
@@ -257,6 +340,7 @@ int main() {
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
+		glUniform3f(colorLoc, 0.855f, 0.647f, 0.125f); // Goldenrod
 		model = glm::mat4(1.0f);
 		model = glm::scale(model, glm::vec3(1.0f, 5.6f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
 		model = glm::translate(model, glm::vec3(6.0f, 1.6f, -0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
@@ -264,6 +348,7 @@ int main() {
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		//Mano de woody
+		glUniform3f(colorLoc, 0.961f, 0.871f, 0.702f); // Wheat
 		model = glm::mat4(1.0f);
 		model = glm::scale(model, glm::vec3(2.5f, 1.0f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
 		model = glm::translate(model, glm::vec3(2.1f, 12.3f, -0.4f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
@@ -287,12 +372,15 @@ int main() {
 
 		//Brazo derecho
 
+		glUniform3f(colorLoc, 0.855f, 0.647f, 0.125f); // Goldenrod
 		model = glm::mat4(1.0f);
 		model = glm::scale(model, glm::vec3(1.0f, 2.6f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
 		model = glm::translate(model, glm::vec3(-3.5f, 3.6f, -0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
+
+		glUniform3f(colorLoc, 0.855f, 0.647f, 0.125f); // Goldenrod
 		model = glm::mat4(1.0f);
 		model = glm::scale(model, glm::vec3(1.0f, 2.6f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
 		model = glm::translate(model, glm::vec3(-4.5f, 3.0f, -0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
@@ -300,30 +388,153 @@ int main() {
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
-
+		glUniform3f(colorLoc, 0.855f, 0.647f, 0.125f); // Goldenrod
 		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(2.6f, 1.0f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
-		model = glm::translate(model, glm::vec3(-2.2f, 7.0f, -0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		model = glm::scale(model, glm::vec3(2.6f, 1.0f, 2.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-2.2f, 7.0f, 0.0f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
+		glUniform3f(colorLoc, 0.855f, 0.647f, 0.125f); // Goldenrod
 		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(1.0f, 4.0f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
-		model = glm::translate(model, glm::vec3(-5.5f, 1.2f,-0.5f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		model = glm::scale(model, glm::vec3(1.0f, 2.0f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-5.5f, 3.2f,0.0f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
 
-		//		model = glm::scale(model, glm::vec3(1.0f, 2.6f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		glUniform3f(colorLoc, 0.855f, 0.647f, 0.125f); // Goldenrod
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.0f, 2.0f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-4.5f, 2.8f, 0.0f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		//Mano derecha
+		glUniform3f(colorLoc, 0.961f, 0.871f, 0.702f); // Wheat
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-2.0f, 1.8f, 0.28f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
 
+		//Corbata de woody
+		glUniform3f(colorLoc, 0.502f, 0.0f, 0.0f); // Maroon
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(4.0f, 1.5f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(0.0f, 7.8f, -0.1f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+
+		//CABEZA de woody
+		glUniform3f(colorLoc, 0.961f, 0.871f, 0.702f); // Wheat
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(2.0f, 4.0f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(0.0f, 3.63f, -0.1f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		glUniform3f(colorLoc, 0.961f, 0.871f, 0.702f); // Wheat
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(0.0f, 7.2f, 0.7f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		glUniform3f(colorLoc, 0.961f, 0.871f, 0.702f); // Wheat
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(2.0f, 5.0f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(0.0f, 3.2f, 1.9f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//CABELLO WOODY
+		glUniform3f(colorLoc, 0.647f, 0.165f, 0.165f); // Brown
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(2.0f, 3.2f, 0.9f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(0.0f, 5.3f, 1.0f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+
+		glUniform3f(colorLoc, 0.647f, 0.165f, 0.165f); // Brown
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(2.0f, 2.2f, 0.9f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(0.0f, 8.0f, 0.1f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		glUniform3f(colorLoc, 0.647f, 0.165f, 0.165f); // Brown
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(2.0f, 2.2f, 2.8f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(0.0f, 8.9f, 0.37f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		//Sombrero woody
+
+
+		//costado izquierdo
+		glUniform3f(colorLoc, 0.647f, 0.165f, 0.165f); // Brown
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(2.0f, 2.2f, 2.8f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-1.0f, 8.9f, 0.37f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//costado derecho
+		glUniform3f(colorLoc, 0.647f, 0.165f, 0.165f); // Brown
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(2.0f, 2.2f, 2.8f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(1.0f, 8.9f, 0.37f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		//Cubo en medio
+		glUniform3f(colorLoc, 0.647f, 0.165f, 0.165f); // Brown
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(3.0f, 4.2f, 2.8f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(0.0f, 5.0f, 0.37f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		//Recuadro grande
+		glUniform3f(colorLoc, 0.647f, 0.165f, 0.165f); // Brown
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(8.0f, 2.0f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(0.0f, 10.5f, 0.37f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+
+
+		//Recuadro mediano
+		glUniform3f(colorLoc, 0.647f, 0.165f, 0.165f); // Brown
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(6.0f, 2.0f, 1.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(0.0f, 10.5f, 1.0f));  // Movimiento en X,Altuta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
 
 		//Funda pistola  Izquierdo
+		glUniform3f(colorLoc, 0.545f, 0.271f, 0.075f); // SaddleBrown
 		model = glm::mat4(1.0f);
 		model = glm::scale(model, glm::vec3(1.0f, 4.6f, 1.5f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
 		model = glm::translate(model, glm::vec3(-3.5f, -0.2f, 0.0f));  // Posiciona la pata
@@ -331,6 +542,80 @@ int main() {
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
+		//Pie 1 DERECHA
+		glUniform3f(colorLoc, 0.545f, 0.271f, 0.075f); // SaddleBrown
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(2.4f, 4.0f, 0.75f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(0.8f, -3.6f, -0.5f));  // Movimiento en X,Alruta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		glUniform3f(colorLoc, 0.722f, 0.525f, 0.043f); // DarkGoldenRod
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(2.4f, 1.0f, 0.75f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(0.8f, -16.9f, -0.5f));  // Movimiento en X,Alruta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		glUniform3f(colorLoc, 0.545f, 0.271f, 0.075f); // SaddleBrown
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(1.5f, -23.7f, -0.5f));  // Movimiento en X,Alruta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		glUniform3f(colorLoc, 0.545f, 0.271f, 0.075f); // SaddleBrown
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(2.75f, 0.75f, 0.75f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(1.5f, -23.7f, -0.5f));  // Movimiento en X,Alruta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		//Pie 2 Izquierda
+		glUniform3f(colorLoc, 0.545f, 0.271f, 0.075f); // SaddleBrown
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.5f, 4.0f, 3.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-1.5f, -3.6f, 0.0f));  // Posiciona la pata
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		glUniform3f(colorLoc, 0.722f, 0.525f, 0.043f); // DarkGoldenRod
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.5f, 1.0f, 3.0f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-1.5f, -16.9f, 0.0f));  // Posiciona la pata
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+
+		glUniform3f(colorLoc, 0.545f, 0.271f, 0.075f); // SaddleBrown
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.5f, 1.0f, 0.75f));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-1.5f, -17.8f, -1.5f));  // Movimiento en X,Alruta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		glUniform3f(colorLoc, 0.545f, 0.271f, 0.075f); // SaddleBrown
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.5f, 1.0f, 3.0));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(-1.5f, -17.8f, 0.8f));  // Movimiento en X,Alruta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+
+		//Superficie de suelo
+		glUniform3f(colorLoc, 0.871f, 0.722f, 0.529f); // BurlyWood
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(33.0f, 1.0f, 33.0));  // Tamaño de la pata/ Ancho, Alto, Profundidad
+		model = glm::translate(model, glm::vec3(0.0f, -18.7f, 0.0f));  // Movimiento en X,Alruta posicion y Movimiento en Profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		glBindVertexArray(0);
 		// Swap the screen buffers
