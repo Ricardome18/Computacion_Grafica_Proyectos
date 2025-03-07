@@ -1,4 +1,4 @@
-﻿//Practica 5                          	Mendoza Espinosa Ricardo
+﻿//Actividad Carga de modelos                           	Mendoza Espinosa Ricardo
 //Fecha de entrega : 07 - 03 - 2025    	 	319018370
 
 #include<iostream>
