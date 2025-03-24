@@ -156,8 +156,8 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_NEAREST);
 	// Diffuse map
 	
-	//image = stbi_load("images/sonic.png", &textureWidth, &textureHeight, &nrChannels,0);//ruta de donde se encuentra la textura
-	image = stbi_load("images/shadow.png", &textureWidth, &textureHeight, &nrChannels, 0);//Textura con transparencia 
+	image = stbi_load("images/sonic.png", &textureWidth, &textureHeight, &nrChannels,0);//ruta de donde se encuentra la textura
+	//image = stbi_load("images/shadow.png", &textureWidth, &textureHeight, &nrChannels, 0);//Textura con transparencia 
 
 	glBindTexture(GL_TEXTURE_2D, texture1);//enlace de la textura con el identificador 2D
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textureWidth, textureHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
@@ -267,6 +267,47 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 		if (action == GLFW_PRESS)
 		{
 			keys[key] = true;
+            // Is called whenever a key is pressed/released via GLFW
+            void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
+            {
+                if (GLFW_KEY_ESCAPE == key && GLFW_PRESS == action)
+                {
+                    glfwSetWindowShouldClose(window, GL_TRUE);
+                }
+
+                if (key >= 0 && key < 1024)
+                {
+                    if (action == GLFW_PRESS)
+                    {
+                        keys[key] = true;
+                    }
+                    else if (action == GLFW_RELEASE)
+                    {
+                        keys[key] = false;
+                    }
+                }
+
+                if (keys[GLFW_KEY_O])
+                {
+                    movelightPos += 0.1f;
+                }
+
+                if (keys[GLFW_KEY_L])
+                {
+                    movelightPos -= 0.1f;
+                }
+
+                // Mover la segunda fuente de luz con las teclas "p" y "ñ"
+                if (keys[GLFW_KEY_P])
+                {
+                    lightPos2.x += 0.1f; // Mover hacia la derecha
+                }
+
+                if (keys[GLFW_KEY_SEMICOLON]) // GLFW_KEY_SEMICOLON corresponde a la tecla "ñ" en un teclado en español
+                {
+                    lightPos2.x -= 0.1f; // Mover hacia la izquierda
+                }
+            }
 		}
 		else if (action == GLFW_RELEASE)
 		{
