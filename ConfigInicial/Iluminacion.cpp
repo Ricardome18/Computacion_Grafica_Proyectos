@@ -1,5 +1,5 @@
-//Actividad Materiales e iluminación		Mendoza Espinosa Ricardo
-//Fecha de entrega : 23 - 03 - 2025    	 	319018370
+//Practica 8 (Materiales e iluminación) 	Mendoza Espinosa Ricardo
+//Fecha de entrega : 28 - 03 - 2025    	 	319018370
  
 
 // Std. Includes
@@ -42,13 +42,18 @@ bool firstMouse = true;
 
 
 // Light attributes
+
 glm::vec3 lightPos(0.5f, 0.5f, 2.5f); // Primera luz
-glm::vec3 lightPos2(2.0f, 0.0f, 0.0f); // Segunda luz
+
 float movelightPos = 0.0f;
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
 float rot = 0.0f;
 bool activanim = false;
+
+bool TiempoDIA = true; // Controla si es de día o noche
+float lightAngle = 0.0f;
+float lightRadius = 5.0f; // Radio de movimiento de la luz 
 
 int main()
 {
@@ -62,7 +67,7 @@ int main()
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
     // Create a GLFWwindow object that we can use for GLFW's functions
-    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Materiales e Iluminacion-Ricardo Mendoza", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Practica 8 (Materiales e iluminacion)-Ricardo Mendoza", nullptr, nullptr);
 
     if (nullptr == window)
     {
@@ -105,13 +110,39 @@ int main()
 
 
 
-    // Load models
+    // Carga de  modelos
+
+    //Modelo de luna
+	Model luna((char*)"Models/moon/moon.obj");
+
+    //Modelo de sol
+	Model sol1((char*)"Models/sol1/sol.obj");
+
+    //Perro rojo
     Model red_dog((char*)"Models/RedDog/RedDog.obj");
-    glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
     //Modelo 2 de sonic
     Model sonic((char*)"Models/Sonic/SonicTH06Model.obj");
+  
+    //Modelo de shadow
+    Model shadow((char*)"Models/Shadow.obj");
+   
+    //Modelo de parque
+    Model Parque((char*)"Models/parque2/Parque.obj");
+    
+    //Modelo de Camioneta
+    Model Camioneta((char*)"Models/Camioneta/tripo_convert_ff643e8d-b55f-46d1-bdd7-a83812ff66e4.obj");
+    
+    //Modelo de Planta
+    Model Planta((char*)"Models/Planta/eb_house_plant_03.obj");
+    
+    //Modelo de Tortuga
+    Model Tortuga((char*)"Models/Tortuga/13103_pearlturtle_v1_l2.obj");
+    
+    //Modelo de Helicoptero
+    Model Helicop((char*)"Models/Helicoptero/helicoptero.obj");
 
+    glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
     float vertices[] = {
       -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -202,9 +233,13 @@ int main()
 
 
     // Game loop
-    // Game loop
     while (!glfwWindowShouldClose(window))
     {
+        lightPos.x = lightRadius * cos(glm::radians(lightAngle));
+        lightPos.y = lightRadius * sin(glm::radians(lightAngle));
+        lightPos.z = 0.0f; // Fijo
+
+
         GLfloat currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
@@ -217,20 +252,36 @@ int main()
 
         // Using the lighting shader
         lightingShader.Use();
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "light.position"), lightPos.x, lightPos.y, lightPos.z);
 
-        // Passing both light positions to the shader
-        glUniform3f(glGetUniformLocation(lightingShader.Program, "light.position"), lightPos.x + movelightPos, lightPos.y + movelightPos, lightPos.z + movelightPos);
-        glUniform3f(glGetUniformLocation(lightingShader.Program, "light2.position"), lightPos2.x + movelightPos, lightPos2.y + movelightPos, lightPos2.z + movelightPos);
 
-        // Propiedades de luz para ambas luces
-        //luz 1
-        glUniform3f(glGetUniformLocation(lightingShader.Program, "light.ambient"), 0.3f, 0.3f, 0.3f);
-        glUniform3f(glGetUniformLocation(lightingShader.Program, "light.diffuse"), 0.2f, 0.7f, 0.8f);
-        glUniform3f(glGetUniformLocation(lightingShader.Program, "light.specular"), 0.0f, 0.0f, 0.0f);
-        //Luz 2
-        glUniform3f(glGetUniformLocation(lightingShader.Program, "light2.ambient"), 0.3f, 0.3f, 0.3f);
-        glUniform3f(glGetUniformLocation(lightingShader.Program, "light2.diffuse"), 0.7f, 0.7f, 0.0f);
-        glUniform3f(glGetUniformLocation(lightingShader.Program, "light2.specular"), 0.0f, 0.0f, 0.0f);
+       // Propiedades de luz según día o noche
+       
+        if (TiempoDIA) {
+            // Sol más brillante
+            glUniform3f(glGetUniformLocation(lightingShader.Program, "light.ambient"), 0.5f, 0.5f, 0.3f);
+            glUniform3f(glGetUniformLocation(lightingShader.Program, "light.diffuse"), 1.0f, 1.0f, 0.6f);
+            glUniform3f(glGetUniformLocation(lightingShader.Program, "light.specular"), 1.0f, 1.0f, 0.8f);
+        }
+        else {
+            // Luna más brillante
+            glUniform3f(glGetUniformLocation(lightingShader.Program, "light.ambient"), 0.3f, 0.3f, 0.4f);
+            glUniform3f(glGetUniformLocation(lightingShader.Program, "light.diffuse"), 0.6f, 0.6f, 1.0f);
+            glUniform3f(glGetUniformLocation(lightingShader.Program, "light.specular"), 0.6f, 0.6f, 1.0f);
+        }
+
+        glm::mat4 modelLight(1.0f);
+        modelLight = glm::translate(modelLight, lightPos);
+        modelLight = glm::scale(modelLight, glm::vec3(1.3f));
+        glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelLight));
+
+        if (TiempoDIA) {
+            sol1.Draw(lightingShader); //  carga el modelo `sol`
+        }
+        else {
+            luna.Draw(lightingShader); // carga el modelo `luna`
+        }
+
 
         // Set camera position
         glUniform3f(glGetUniformLocation(lightingShader.Program, "viewPos"), camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
@@ -245,20 +296,76 @@ int main()
         glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 1.0f, 1.0f, 1.0f);
         glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 0.0f);
 
+
+
         // Draw the loaded model (red_dog)
         glm::mat4 model1(1);
-        model1 = glm::scale(model1, glm::vec3(3.0f, 3.0f, 3.0f));
-		model1 = glm::translate(model1, glm::vec3(0.0f, 0.0f, 0.0f));
+        model1 = glm::scale(model1, glm::vec3(1.0f, 1.0f, 1.0f));
+		model1 = glm::translate(model1, glm::vec3(1.5f, -0.8f, 0.5f));
         glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model1));
         red_dog.Draw(lightingShader);
 
         // Draw the second model (sonic)
-        glm::mat4 model2(1);
-        model2 = glm::scale(model2, glm::vec3(0.05f, 0.05f, 0.05f)); // Aquí se define la escala del modelo de Sonic
-        model2 = glm::translate(model2, glm::vec3(-25.0f, 0.0f, 0.0f));
-        glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model2));
+        glm::mat4 modelsonic(1);
+        modelsonic = glm::translate(modelsonic, glm::vec3(1.0f, -1.15f, 1.0f));
+        modelsonic = glm::scale(modelsonic, glm::vec3(0.01f, 0.01f, 0.01f)); // Aquí se define la escala del modelo de Sonic
+        glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelsonic));
         sonic.Draw(lightingShader);
   
+
+        // Para el modelo de Shadow
+        glm::mat4 modelShadow(1); // Nueva matriz de modelo para Shadow
+        modelShadow = glm::translate(modelShadow, glm::vec3(0.0f, -0.75f, 0.0f));  // Posicionar en el fondo
+        modelShadow = glm::scale(modelShadow, glm::vec3(0.05f, 0.05f, 0.05f)); // Escala adecuada solo para Shadow
+        modelShadow = glm::rotate(modelShadow, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotación de Shadow
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelShadow));
+        shadow.Draw(shader);
+
+
+        // Para el modelo de Parque
+        glm::mat4 modelParque(1); // Nueva matriz de modelo para Parque
+        modelParque = glm::translate(modelParque, glm::vec3(0.0f, 0.0f, 0.0f));  // Posicionar en el fondo
+        modelParque = glm::scale(modelParque, glm::vec3(7.0f, 7.0f, 7.0f)); // Escala adecuada solo para Parque
+        modelParque = glm::rotate(modelParque, glm::radians(270.0f), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotación de Parque
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelParque));
+        Parque.Draw(shader);
+
+        // Para el modelo de camioneta
+        glm::mat4 modelCamioneta(1); // Nueva matriz de modelo para camioneta
+        modelCamioneta = glm::translate(modelCamioneta, glm::vec3(-1.7f, -0.65f, 2.2f));  // Posicionar en el fondo
+        modelCamioneta = glm::scale(modelCamioneta, glm::vec3(2.0f, 2.0f, 2.0f)); // Escala adecuada solo para camioneta
+        modelCamioneta = glm::rotate(modelCamioneta, glm::radians(-180.0f), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotación de camioneta
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelCamioneta));
+        Camioneta.Draw(shader);
+
+
+        // Para el modelo de Planta
+        glm::mat4 modelPlanta(1); // Nueva matriz de modelo para Planta
+        modelPlanta = glm::translate(modelPlanta, glm::vec3(2.0f, -1.5f, 0.5f));  // Posicionar en el fondo
+        modelPlanta = glm::scale(modelPlanta, glm::vec3(0.02f, 0.02f, 0.02f)); // Escala adecuada solo para Planta
+        modelPlanta = glm::rotate(modelPlanta, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotación de Planta
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelPlanta));
+        Planta.Draw(shader);
+
+        // Para el modelo de Tortuga
+        glm::mat4 modelTortuga(1); // Nueva matriz de modelo para Tortuga
+        modelTortuga = glm::translate(modelTortuga, glm::vec3(-2.0f, -1.5f, 0.0f));  // Posicionar en el fondo
+        modelTortuga = glm::scale(modelTortuga, glm::vec3(0.05f, 0.05f, 0.05f)); // Escala adecuada solo para Tortuga
+        modelTortuga = glm::rotate(modelTortuga, glm::radians(270.0f), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotación de Tortuga
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelTortuga));
+        Tortuga.Draw(shader);
+
+
+
+        // Para el modelo del Helicoptero
+        glm::mat4 modelHelicop(1); // Nueva matriz de modelo para Helicoptero
+        modelHelicop = glm::translate(modelHelicop, glm::vec3(1.0f, 2.0f, 0.0f));  // Posicionar en el fondo
+        modelHelicop = glm::scale(modelHelicop, glm::vec3(3.0f, 3.0f, 3.0f)); // Escala adecuada solo para Helicoptero
+        modelHelicop = glm::rotate(modelHelicop, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotación de Helicoptero
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelHelicop));
+        Helicop.Draw(shader);
+
+
 
         glBindVertexArray(VAO);
         //glDrawArrays(GL_TRIANGLES, 0, 36); // Dibujar cubo
@@ -267,37 +374,7 @@ int main()
 
         glBindVertexArray(0);
 
-
-        // Use another shader for the lamp
-        lampshader.Use();
-        glUniformMatrix4fv(glGetUniformLocation(lampshader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-        glUniformMatrix4fv(glGetUniformLocation(lampshader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
-        glm::mat4 lampModel = glm::mat4(1.0f);
-
-        lampModel = glm::translate(lampModel, lightPos + movelightPos);
-        lampModel = glm::scale(lampModel, glm::vec3(0.1f)); // Reducir el tamaño del cubo
-        glUniformMatrix4fv(glGetUniformLocation(lampshader.Program, "model"), 1, GL_FALSE, glm::value_ptr(lampModel));
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        glBindVertexArray(0);
-
-
-        // Draw the cube representing the second light source
-        lampshader.Use();
-        glUniformMatrix4fv(glGetUniformLocation(lampshader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-        glUniformMatrix4fv(glGetUniformLocation(lampshader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
-        glm::mat4 lightModel2 = glm::mat4(1.0f);
-   
-
-        // Use the existing definition of lightModel2
-        lightModel2 = glm::mat4(1.0f);
-        lightModel2 = glm::translate(lightModel2, lightPos2); // Use the position of the second light source
-        lightModel2 = glm::scale(lightModel2, glm::vec3(0.2f)); // Size of the light cube
-        glUniformMatrix4fv(glGetUniformLocation(lampshader.Program, "model"), 1, GL_FALSE, glm::value_ptr(lightModel2));
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36); // Draw cube
-        glBindVertexArray(0);
-
+ 
         // Swap the buffers
         glfwSwapBuffers(window);
     }
@@ -312,7 +389,17 @@ int main()
 
 // Moves/alters the camera positions based on user input
 void DoMovement()
-{
+{   //movimeinto de 0 a 138 grados
+    if (keys[GLFW_KEY_O]) {
+        if (lightAngle < 180.0f)
+            lightAngle += 30.0f * deltaTime; // aumenta hasta 180°
+    }
+    if (keys[GLFW_KEY_L]) {
+        if (lightAngle > 0.0f)
+            lightAngle -= 30.0f * deltaTime; // disminuye hasta 0°
+    }
+
+
     // Camera controls
     if (keys[GLFW_KEY_W] || keys[GLFW_KEY_UP])
     {
@@ -363,6 +450,11 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
         }
     }
 
+    if (key == GLFW_KEY_Z && action == GLFW_PRESS) {
+        TiempoDIA = !TiempoDIA;
+    }
+
+
     // Movimiento para la primera fuente de luz (cubos 1) con las teclas "O" y "L"
     if (keys[GLFW_KEY_O]) // Mueve el primer cubo de luz hacia la derecha
     {
@@ -372,17 +464,6 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
     if (keys[GLFW_KEY_L]) // Mueve el primer cubo de luz hacia la izquierda
     {
         lightPos.z -= 0.1f;
-    }
-
-    // Movimiento para la segunda fuente de luz (cubos 2) con las teclas "I" y "K"
-    if (keys[GLFW_KEY_I]) // Mueve el segundo cubo de luz hacia arriba
-    {
-        lightPos2.z += 0.1f;
-    }
-
-    if (keys[GLFW_KEY_K]) // Mueve el segundo cubo de luz hacia abajo
-    {
-        lightPos2.z -= 0.1f;
     }
 }
 
