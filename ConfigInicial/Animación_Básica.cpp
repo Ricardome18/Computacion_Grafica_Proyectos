@@ -1,6 +1,6 @@
-//Actividad Animacion Basica				Mendoza Espinosa Ricardo
-//Fecha de entrega : 06 - 04 - 2025    	 	319018370
-
+﻿
+//Practica 10 Animacion Basica                      	Mendoza Espinosa Ricardo
+//Fecha de entrega : 11 - 04 - 2025    	 	                    319018370 
 
 
 #include <iostream>
@@ -45,13 +45,14 @@ GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
 bool keys[1024];
 bool firstMouse = true;
+
 // Light attributes
 glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
 bool active;
 
 // Positions of the point lights
 glm::vec3 pointLightPositions[] = {
-	glm::vec3(0.0f,2.0f, 0.0f),
+	glm::vec3(0.0f,1.6f, 0.0f),
 	glm::vec3(0.0f,0.0f, 0.0f),
 	glm::vec3(0.0f,0.0f,  0.0f),
 	glm::vec3(0.0f,0.0f, 0.0f)
@@ -104,14 +105,14 @@ float vertices[] = {
 
 
 glm::vec3 Light1 = glm::vec3(0);
-//Anim
-float rotBall = 0;
-bool AnimBall = false;
 
-// Inicializa variables para las posiciones
-float ballPositionY = 0.0f; // Altura inicial (nariz del perro)
-float speed = 0.001f; // Velocidad de movimiento
-bool movingDown = true; // Indica si la pelota se mueve hacia abajo
+//Variables para Animacion
+float rotBall = 1.0472;
+bool AnimBall = false;
+float salto = 0.0f;
+float rot = 0.0f;
+
+float animationSpeed = 0.06f;  // Controla la velocidad global de la animación. Un valor más bajo significa más lento.
 
 
 // Deltatime
@@ -130,7 +131,7 @@ int main()
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);*/
 
 	// Create a GLFWwindow object that we can use for GLFW's functions
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Animacion basica-Ricardo Mendoza", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Practica 10 Animacion basica-Ricardo Mendoza", nullptr, nullptr);
 
 	if (nullptr == window)
 	{
@@ -169,7 +170,7 @@ int main()
 	Shader lampShader("Shader/lamp.vs", "Shader/lamp.frag");
 	
 	//models
-	Model Dog((char*)"Models/RedDog.obj");
+	Model Dog((char*)"Models/RedDog/Perr4/Perro4.obj");
 	Model Piso((char*)"Models/piso.obj");
 	Model Ball((char*)"Models/ball.obj");
 
@@ -216,8 +217,10 @@ int main()
 	   
 		// OpenGL options
 		glEnable(GL_DEPTH_TEST);
-
-	
+		glm::mat4 modelTemp = glm::mat4(1.0f); //Temp
+		glm::mat4 modelTemp1 = glm::mat4(1.0f); //Temp
+		
+		
 
 		// Use cooresponding shader when setting uniforms/drawing objects
 		lightingShader.Use();
@@ -287,30 +290,40 @@ int main()
 	
 		
 		//Carga de modelo 
+
 		//Modelo piso
         view = camera.GetViewMatrix();	
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Piso.Draw(lightingShader);
 
+
 		//Modelo perro
 		model = glm::mat4(1);
+		modelTemp = model = glm::translate(model, glm::vec3(0.0f, salto / 2, 0.0f));modelTemp = model;// Aquí se hace una asignación para guardar temporalmente la transformación aplicada en modelTemp, para usarla en la siguiente operación.
+		modelTemp = glm::rotate(modelTemp, glm::radians(rotBall), glm::vec3(0.0f, -1.0f, 0.0f));//Rotacion en sentido horario del perro por el -1
+		model = glm::translate(modelTemp, glm::vec3(2.0f, 0.0f, 0.0f));//Traslacion inicial en el plano X del perro
+		model = glm::rotate(model, glm::radians((-23*salto)-rot*2), glm::vec3(1.0f, 0.0f, 0.0f));//Movimiento de golpeo de pelota en el plano X del perro
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 0);
-		Dog.Draw(lightingShader);
-
-
-		//Modelo pelota
-		model = glm::mat4(1);
-		glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 1);
-		model = glm::translate(model, glm::vec3(0.0f, ballPositionY, 0.0f)); // Aplica la traslaci�n en el eje Y
-		//model = glm::rotate(model, glm::radians(rotBall), glm::vec3(0.0f, 1.0f, 0.0f));//Se aplica la rotacion antes de dibujar 
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));//Se manda a llamar el shader para que se vea aplicada la rotacion al modelo
-	    Ball.Draw(lightingShader); //se dibuja la pelota
-		glDisable(GL_BLEND);  //Desactiva el canal alfa 
+		Dog.Draw(lightingShader);
+		glBindVertexArray(0);
+
+
+		//Modelo de la pelota
+
+		model = glm::mat4(1);
+		//glEnable(GL_BLEND);//Activa la funcionalidad para trabajar el canal alfa
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 1);
+		modelTemp = model = glm::translate(model, glm::vec3(0.0f, (-salto*0.7f) + 1.5f, 0.0f));//La pelota baja en el plano Y
+		modelTemp = glm::rotate(modelTemp, glm::radians(rotBall), glm::vec3(0.0f, 1.0f, 0.0f));//Rotacion en sentido antihorario de la pelota por el 1
+		model = glm::translate(modelTemp, glm::vec3(2.5f, 0.0f, 0.0f));//Traslacion inicial en el plano X 
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+	    Ball.Draw(lightingShader); 
+		//glDisable(GL_BLEND);  //Desactiva el canal alfa 
 		glBindVertexArray(0);
 	
 
@@ -324,19 +337,18 @@ int main()
 		// Set matrices
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
-		//Apartado para el cubo de fuente de luz 
 		model = glm::mat4(1);
 		model = glm::translate(model, lightPos);
 		model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		// Draw the light object (using light's vertex attributes)
 		
-			model = glm::mat4(1);
-			model = glm::translate(model, pointLightPositions[0]);
-			model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube
-			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-			glBindVertexArray(VAO);
-			glDrawArrays(GL_TRIANGLES, 0, 36);
+		model = glm::mat4(1);
+		model = glm::translate(model, pointLightPositions[0]);
+		model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glBindVertexArray(VAO);
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
 		
 		glBindVertexArray(0);
 
@@ -451,43 +463,64 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 	}
 	if (keys[GLFW_KEY_N])
 	{
-		AnimBall = !AnimBall;  // Activa o desactiva la animaci�n
-
-		if (!AnimBall)  // Si se desactiva la animaci�n
-		{
-			ballPositionY = 0.0f;  // Restablece la posici�n de la pelota al origen (altura inicial)
-		}
+		AnimBall = !AnimBall;
+		
 	}
 }
-//void Animation() {
-//	if (AnimBall)
-//	{
-//		rotBall += 0.2f;
-//		//printf("%f", rotBall);
-//	}
-//	else
-//	{
-//		//rotBall = 0.0f;
-//	}
-//}
+
 
 void Animation() {
-	// Controla el movimiento de la pelota
-	if (AnimBall) {
-		if (movingDown) {
-			ballPositionY -= speed; // Baja la pelota
-			if (ballPositionY <= 0.0f) { // Si llega a la altura de la fuente de luz
-				movingDown = false; // Cambia la direcci�n
-			}
+	if (AnimBall)
+	{
+		rotBall += 0.5f * animationSpeed;  // Ralentiza la rotación de la pelota
+		printf("Angulo de rotacion:%f\n", rotBall);
+
+		//Resetear las rotaciónes de la pelota y el perro
+		if (rotBall >= 360) {
+			rotBall = 0;
+		}
+
+		// Control de rotación de la pelota
+		if (rotBall >= 120 && rotBall < 150) {
+			rot -= 0.1 * animationSpeed;  // Ralentiza el movimiento de rotación del perro
+		}
+		else if (rotBall >= 150 && rotBall < 165) {
+			rot += 0.2 * animationSpeed;
+		}
+		else if (rotBall >= 300 && rotBall < 330) {//cambio
+			rot -= 0.1 * animationSpeed;
+		}
+		else if (rotBall >= 330 && rotBall < 345) {
+			rot += 0.2 * animationSpeed;
 		}
 		else {
-			ballPositionY += speed; // Sube la pelota
-			if (ballPositionY >= 1.7f) { // Si llega a la altura inicial
-				movingDown = true; // Cambia la direcci�n
-			}
+			rot = 0;
+		}
+
+		// Control de salto (más lento o rápido dependiendo de animationSpeed)
+		if (rotBall >= 160 && rotBall <= 180) {
+			salto += 0.03 * animationSpeed;  // Ajusta la altura del salto
+		}
+		else if (rotBall > 180 && rotBall <= 200) {
+			salto -= 0.03 * animationSpeed;  // Ajusta la altura del descenso del salto
+		}
+		else if (rotBall > 340) {
+			salto += 0.03 * animationSpeed;  // Ajusta la altura del salto
+		}
+		else if (rotBall >= 0 && rotBall <= 20) {
+			salto -= 0.03 * animationSpeed;  // Ajusta la altura del descenso
+		}
+		else {
+			salto = 0;
 		}
 	}
+	else
+	{
+		// Si la animación está desactivada, restablecer las variables
+		rotBall = 0.0f;
+	}
 }
+
 
 void MouseCallback(GLFWwindow *window, double xPos, double yPos)
 {
