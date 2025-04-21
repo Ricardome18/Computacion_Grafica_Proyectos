@@ -31,7 +31,7 @@
     <None Include="Shader\modelLoading.vs" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Animación_Básica.cpp" />
+    <ClCompile Include="Maquina de estados.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -92,6 +92,8 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/External Libraries/GLFW/include;$(SolutionDir)/External Libraries/glm;$(SolutionDir)/External Libraries/GLEW/include;$(SolutionDir)/External Libraries/assimp/include;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\glm;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\GLFW\include;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/FS
+ %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -109,6 +111,8 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/External Libraries/GLFW/include;$(SolutionDir)/External Libraries/glm;$(SolutionDir)/External Libraries/GLEW/include;$(SolutionDir)/External Libraries/assimp/include;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\glm;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\GLFW\include;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/FS
+ %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -126,6 +130,8 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/External Libraries/GLFW/include;$(SolutionDir)/External Libraries/glm;$(SolutionDir)/External Libraries/GLEW/include;$(SolutionDir)/External Libraries/assimp/include;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\glm;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\GLFW\include;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/FS
+ %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,6 +149,8 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/External Libraries/GLFW/include;$(SolutionDir)/External Libraries/glm;$(SolutionDir)/External Libraries/GLEW/include;$(SolutionDir)/External Libraries/assimp/include;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\glm;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\GLFW\include;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/FS
+ %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
