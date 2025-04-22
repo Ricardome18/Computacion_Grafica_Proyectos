@@ -1,6 +1,6 @@
 
-//Actividad Animación por máquina de estados	Mendoza Espinosa Ricardo
-//Fecha de entrega : 20 - 04 - 2025    	 	319018370
+//Practica 11 Animación por máquina de estados	  Mendoza Espinosa Ricardo
+//Fecha de entrega : 21 - 04 - 2025    	 	319018370
 
 #include <iostream>
 #include <cmath>
@@ -116,6 +116,8 @@ float tail = 0.0f;
 glm::vec3 dogPos (0.0f,0.0f,0.0f);
 float dogRot = 0.0f;
 bool step = false;
+//Segundo estado de la maquina de estados
+//int dogAnim2 = 0;
 
 
 
@@ -135,7 +137,7 @@ int main()
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);*/
 
 	// Create a GLFWwindow object that we can use for GLFW's functions
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Animacion maquina de estados-Ricardo Mendoza", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Practica 11 Animacion maquina de estados-Ricardo Mendoza", nullptr, nullptr);
 
 	if (nullptr == window)
 	{
@@ -466,7 +468,7 @@ void DoMovement()
 }
 
 // Is called whenever a key is pressed/released via GLFW
-void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode)
+void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
 	if (GLFW_KEY_ESCAPE == key && GLFW_PRESS == action)
 	{
@@ -491,7 +493,7 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 		if (active)
 		{
 			Light1 = glm::vec3(0.2f, 0.8f, 1.0f);
-			
+
 		}
 		else
 		{
@@ -501,20 +503,54 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 	if (keys[GLFW_KEY_N])
 	{
 		AnimBall = !AnimBall;
-		
+
 	}
 	if (keys[GLFW_KEY_B])
 	{
 		dogAnim = 1;
 
 	}
-
-	
 }
+
+
+
+
 void Animation() {
-	if (dogAnim == 1) { //walk animation
-		if (dogPos.z < 2.2f) { //  Nueva condición: mientras no haya llegado al final del suelo
-			if (!step) { //state 1
+	if (dogAnim == 1) { // Walk animation
+		if (dogPos.z < 2.2f) {
+			if (!step) { // State 1
+				FLegs += 0.03f;
+				RLegs += 0.03f;
+				head += 0.03f;
+				tail += 0.03f;
+				if (RLegs > 15.0f) step = true;
+			}
+			else { // State 2
+				FLegs -= 0.03f;
+				RLegs -= 0.03f;
+				head -= 0.03f;
+				tail -= 0.03f;
+				if (RLegs < -15.0f) step = false;
+			}
+			dogPos.z += 0.001f; // Sigue avanzando mientras no alcance el límite
+		}
+		else {
+			dogAnim = 2;  // Cambiar a animación de rotación
+		}
+	}
+
+	if (dogAnim == 2) { // Rotation animation
+		dogRot += 0.6f; // Gira todo el cuerpo del perro
+		if (dogRot >= 90.0f) {
+			dogRot = 90.0f;
+			dogAnim = 3; // Cambiar a animación de caminar en X
+		}
+	}
+
+	if (dogAnim == 3) { // Walk in X animation
+		if (dogPos.x < 2.2f) { // Camina hasta el límite de 2.2f en X
+			// Sincronizar movimiento de las patas y cola
+			if (!step) { // State 1
 				FLegs += 0.03f;
 				RLegs += 0.03f;
 				head += 0.03f;
@@ -523,7 +559,7 @@ void Animation() {
 					step = true;
 				}
 			}
-			else { //state 2
+			else { // State 2
 				FLegs -= 0.03f;
 				RLegs -= 0.03f;
 				head -= 0.03f;
@@ -532,19 +568,104 @@ void Animation() {
 					step = false;
 				}
 			}
-
-			dogPos.z += 0.001f; // Sigue avanzando mientras no alcance el límite
+			dogPos.x += 0.001f; // Incrementa la posición en X
 		}
 		else {
-			// Si se desea, puedes detener la animación aquí explícitamente
-			dogAnim = 0;
-			// O simplemente ya no modificar dogPos.z
+			dogAnim = 4; // Cambiar a animación de rotación -90º
 		}
-		printf("\n%f", dogPos.z);
 	}
 
-	
+	// Nueva animación 4: rotación 180 grados
+	if (dogAnim == 4) {
+		dogRot -= 0.6f; // Rota el perro en sentido antihorario (-90 grados)
+		if (dogRot <= 180.0f) {
+			dogRot = 180.0f;
+			dogAnim = 5; // Cambiar a animación 5
+		}
+	}
+
+	// Animación 5: Caminar hacia atrás en el eje Z
+	if (dogAnim == 5) {
+		if (dogPos.z > -2.2f) { // Camina hasta el límite de -2.2f en Z
+			// Sincronizar movimiento de las patas y cola
+			if (!step) { // State 1
+				FLegs += 0.03f;
+				RLegs += 0.03f;
+				head += 0.03f;
+				tail += 0.03f;
+				if (RLegs > 15.0f) step = true;
+			}
+			else { // State 2
+				FLegs -= 0.03f;
+				RLegs -= 0.03f;
+				head -= 0.03f;
+				tail -= 0.03f;
+				if (RLegs < -15.0f) step = false;
+			}
+			dogPos.z -= 0.001f; // Incrementa la posición en Z (negativo, para retroceder)
+		}
+		else {
+			dogAnim = 6; // Prosigue  la animación 6
+		}
+	}
+	//Animacion 6
+	if (dogAnim == 6) { // Rotation animation
+		dogRot += 0.6f; // Gira todo el cuerpo del perro
+		if (dogRot >= -50.0f) {
+			dogRot = -50.0f;
+			dogAnim = 7; // Cambiar a animación 7
+		}
+	}
+
+	// Animación 7: Caminar hacia el centro (0.0f, 0.0f) en diagonal
+	if (dogAnim == 7) {
+		
+		float speed = 0.001f; // Porcentaje de Incrementa de movimiento
+
+		if (dogPos.x >= 0.0f) { 
+			// Sincronizar movimiento de las patas y la cola (de forma similar a la animación 5)
+			if (!step) { // Estado 1
+				FLegs += 0.03f;
+				RLegs += 0.03f;
+				head += 0.03f;
+				tail += 0.03f;
+				if (RLegs > 15.0f) step = true;
+			}
+			else { // Estado 2
+				FLegs -= 0.03f;
+				RLegs -= 0.03f;
+				head -= 0.03f;
+				tail -= 0.03f;
+				if (RLegs < -15.0f) step = false;
+			}
+			dogPos.x -= speed; // Decrementa X
+			dogPos.z += speed; // Decrementa Z
+			printf("\n%f,%f", dogPos.z, dogPos.x);
+
+		}
+		
+		// Verificar si el perro ha llegado al centro (0, 0)
+		if (glm::length(glm::vec2(dogPos.x, dogPos.z)) > 0.05f) {
+			// Si está lejos del centro, sigue moviéndose
+		}
+		else {
+			dogPos.x = 0.0f;
+			dogPos.z = 0.0f;
+			dogAnim = 8; // Prosigue la animación 8 al llegar al centro
+		}
+	}
+	//Animacion 8
+	if (dogAnim == 8) { // Rotation animation
+		dogRot += 0.6f; // Gira todo el cuerpo del perro
+		if (dogRot >= -50.0f) {
+			dogRot = 0.0f;
+			dogAnim = 1; // Volver a animación 1
+		}
+	}
+
+	printf("\n%f,%f", dogPos.z, dogPos.x);
 }
+
 
 void MouseCallback(GLFWwindow *window, double xPos, double yPos)
 {

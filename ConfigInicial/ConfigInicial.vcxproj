@@ -92,7 +92,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/External Libraries/GLFW/include;$(SolutionDir)/External Libraries/glm;$(SolutionDir)/External Libraries/GLEW/include;$(SolutionDir)/External Libraries/assimp/include;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\glm;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\GLFW\include;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/FS
+      <AdditionalOptions>
  %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -111,7 +111,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/External Libraries/GLFW/include;$(SolutionDir)/External Libraries/glm;$(SolutionDir)/External Libraries/GLEW/include;$(SolutionDir)/External Libraries/assimp/include;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\glm;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\GLFW\include;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/FS
+      <AdditionalOptions>
  %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -130,7 +130,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/External Libraries/GLFW/include;$(SolutionDir)/External Libraries/glm;$(SolutionDir)/External Libraries/GLEW/include;$(SolutionDir)/External Libraries/assimp/include;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\glm;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\GLFW\include;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/FS
+      <AdditionalOptions>
  %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -149,7 +149,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/External Libraries/GLFW/include;$(SolutionDir)/External Libraries/glm;$(SolutionDir)/External Libraries/GLEW/include;$(SolutionDir)/External Libraries/assimp/include;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\glm;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\GLFW\include;C:\Users\mendo\OneDrive - UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\Compu_Sources\ConfigInicial\External Libraries\External Libraries\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/FS
+      <AdditionalOptions>
  %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
